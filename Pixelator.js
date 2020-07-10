@@ -89,6 +89,7 @@ const drawAscii = (grayScales, width) => {
     asciiImage.textContent = ascii;
 };
 
+var startSpinny;
 fileInput.onchange = e => {
     // just handling single file upload
     const file = e.target.files[0];
@@ -97,6 +98,7 @@ fileInput.onchange = e => {
     reader.onload = event => {
         const image = new Image();
         image.onload = () => {
+            clearInterval(startSpinny);
             // The image is being stretched to account for the font dimensions, but it's not being resized when the image rotates.
             // Need to frame the image, then ascii-ize it.
 
@@ -115,7 +117,7 @@ fileInput.onchange = e => {
             let fps = 1000 / 60;
             let degrees = 0;
 
-            setInterval(function () {
+            startSpinny = setInterval(function () {
                 canvas.hidden = true;
                 degrees += 6;
                 context.save();
